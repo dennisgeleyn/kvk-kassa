@@ -1,4 +1,4 @@
-# KVK Kassa – Payconiq integratie
+# KVK Kassa – Bancontact Pay integratie
 
 Lokale barkassa voor Kunst Veredelt Kieldrecht, met Payconiq QR-betalingen.
 
@@ -28,8 +28,8 @@ kvk-bar/
 wrangler login
 
 # 2. Secrets instellen (NOOIT in wrangler.toml!)
-wrangler secret put PAYCONIQ_API_KEY
-# → plak je Payconiq API key
+wrangler secret put BANCONTACT_API_KEY
+# → plak je Bancontact Pay API key
 
 wrangler secret put ALLOWED_ORIGIN
 # → bv. http://192.168.1.50  (IP van de tablet op het lokale netwerk)
@@ -42,7 +42,7 @@ wrangler secret put TERMINAL_TOKEN
 # 3. Deployen
 wrangler deploy
 
-# Je Worker-URL verschijnt: https://kvk-payconiq.JOUW-NAAM.workers.dev
+# Je Worker-URL verschijnt: https://kvk-bancontact.JOUW-NAAM.workers.dev
 ```
 
 ---
@@ -52,7 +52,7 @@ wrangler deploy
 Open `index.html` en pas bovenaan in het `<script>` blok aan:
 
 ```js
-const WORKER_URL = 'https://kvk-payconiq.JOUW-NAAM.workers.dev';
+const WORKER_URL = 'https://kvk-bancontact.JOUW-NAAM.workers.dev';
 ```
 
 Als je `TERMINAL_TOKEN` hebt ingesteld, voeg dan ook toe aan de fetch-aanroep
@@ -109,7 +109,7 @@ const MENU = [
 
 Zet in `wrangler.toml`:
 ```toml
-PAYCONIQ_ENV = "dev"
+BANCONTACT_ENV = "dev"
 ```
 En gebruik de Payconiq sandbox API key. Zo kan je betalingen testen
 zonder echte rekeningen.
