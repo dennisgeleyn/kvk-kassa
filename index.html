@@ -224,6 +224,20 @@
   .chip-qty-btn:hover { background: var(--surface); }
   .chip-qty { font-size: 13px; font-weight: 500; min-width: 16px; text-align: center; color: var(--text); }
   .chip-subtotal { font-size: 13px; color: var(--accent); font-weight: 500; min-width: 44px; text-align: right; flex-shrink: 0; }
+  .chip-del {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.1s, color 0.1s, border-color 0.1s;
+    flex-shrink: 0;
+    margin-left: 4px;
+  }
+  .chip-del:hover { background: rgba(239,68,68,0.12); color: var(--danger); border-color: var(--danger); }
 
   /* ── Custom amount ── */
   .custom-row {
@@ -777,6 +791,7 @@ function renderCart() {
         <button class="chip-qty-btn" onclick="adjustQty('${k}', 1)">+</button>
       </div>
       <span class="chip-subtotal">€ ${sub}</span>
+      <button class="chip-del" onclick="removeChip('${k}')" title="Verwijderen">✕</button>
     </div>`;
   }).join('');
 }
