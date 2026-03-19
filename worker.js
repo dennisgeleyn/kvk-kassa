@@ -1,11 +1,11 @@
 /**
- * KVK Payconiq Worker
+ * KVK Bancontact Pay Worker
  * ───────────────────────────────────────────────────────────────────
  * Cloudflare Worker die als veilige tussenlaag dient tussen de
  * kassa-frontend en de Payconiq API.
  *
  * SETUP:
- *   1. wrangler secret put PAYCONIQ_API_KEY    (jouw Payconiq API key)
+ *   1. wrangler secret put BANCONTACT_API_KEY    (jouw Payconiq API key)
  *   2. wrangler secret put ALLOWED_ORIGIN       (bv. http://192.168.1.50 of file://)
  *   3. Optioneel: wrangler secret put TERMINAL_TOKEN  (zie IP whitelist)
  *   4. wrangler deploy
@@ -17,7 +17,7 @@
  *   POST   /webhook                     – Payconiq push-callback (optioneel)
  *
  * OMGEVING:
- *   PAYCONIQ_API_KEY   – Jouw merchant API key (secret)
+ *   BANCONTACT_API_KEY   – Jouw merchant API key (secret)
  *   ALLOWED_ORIGIN     – CORS origin whitelist (bv. http://192.168.1.50)
  *   TERMINAL_TOKEN     – Optioneel statisch token voor extra auth
  *   PAYCONIQ_ENV       – 'ext' (productie) of 'dev' (sandbox). Default: ext
@@ -25,8 +25,8 @@
 
 // ── Payconiq API base URL ─────────────────────────────────────────────
 const PQ_BASE = {
-  ext: 'https://api.payconiq.com/v3',
-  dev: 'https://api.ext.payconiq.com/v3',   // sandbox / testomgeving
+  ext: 'https://merchant.api.bancontact.net/v3',
+  dev: 'https://merchant.api.preprod.bancontact.net/v3',   // sandbox / testomgeving
 };
 
 // ── Limieten ──────────────────────────────────────────────────────────
@@ -80,12 +80,12 @@ function errorResponse(message, status = 400, extraHeaders = {}) {
 
 // ── Payconiq API call ─────────────────────────────────────────────────
 async function payconiqFetch(path, method, body, env) {
-  const base = PQ_BASE[env.PAYCONIQ_ENV || 'ext'];
+  const base = PQ_BASE[env.BANCONTACT_ENV || 'ext'];
   const url = `${base}${path}`;
   const opts = {
     method,
     headers: {
-      'Authorization': `Bearer ${env.PAYCONIQ_API_KEY}`,
+      'Authorization': `Bearer ${env.BANCONTACT_API_KEY}`,
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache',
     },
@@ -153,8 +153,8 @@ export default {
     }
 
     // Sanity check: API key geconfigureerd?
-    if (!env.PAYCONIQ_API_KEY) {
-      console.error('PAYCONIQ_API_KEY niet geconfigureerd');
+    if (!env.BANCONTACT_API_KEY) {
+      console.error('BANCONTACT_API_KEY niet geconfigureerd');
       return errorResponse('Worker niet correct geconfigureerd', 500, cors || {});
     }
 
