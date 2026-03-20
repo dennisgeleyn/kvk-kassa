@@ -1084,6 +1084,12 @@ function clearPinError() {
 }
 
 // ── BOOT ──────────────────────────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+  if (document.getElementById('pinScreen').style.display === 'none') return;
+  if (e.key >= '0' && e.key <= '9') pinPress(e.key);
+  else if (e.key === 'Backspace') pinDel();
+  else if (e.key === 'Escape') pinClear();
+});
 buildTabs();
 buildGrid();
 renderCart();
