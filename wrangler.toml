@@ -7,7 +7,7 @@ compatibility_date = "2024-01-01"
 
 [vars]
 # Niet-geheime variabelen
-BANCONTACT_ENV = "dev"   # "dev" voor sandbox testen, "ext" voor productie
+BANCONTACT_ENV = "ext"   # "dev" voor sandbox testen, "ext" voor productie
 
 # Geheime variabelen: NOOIT hier zetten, gebruik wrangler secrets:
 #   wrangler secret put PAYCONIQ_API_KEY
