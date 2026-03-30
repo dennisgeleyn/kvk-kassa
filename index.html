@@ -878,10 +878,13 @@ async function initPayment() {
 
   try {
     const res = await fetch(`${WORKER_URL}/payment`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amountCents: cents, description: desc, reference: ref }),
-    });
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Terminal-Token': 'DwvdRvF2004wdALA!',
+  },
+  body: JSON.stringify({ amountCents: cents, description: desc, reference: ref }),
+});
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
